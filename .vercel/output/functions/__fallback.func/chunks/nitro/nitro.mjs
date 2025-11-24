@@ -829,6 +829,7 @@ function getRequestHeader(event, name) {
   const value = headers[name.toLowerCase()];
   return value;
 }
+const getHeader = getRequestHeader;
 function getRequestHost(event, opts = {}) {
   if (opts.xForwardedHost) {
     const _header = event.node.req.headers["x-forwarded-host"];
@@ -856,6 +857,7 @@ function getRequestURL(event, opts = {}) {
 }
 
 const RawBodySymbol = Symbol.for("h3RawBody");
+const ParsedBodySymbol = Symbol.for("h3ParsedBody");
 const PayloadMethods$1 = ["PATCH", "POST", "PUT", "DELETE"];
 function readRawBody(event, encoding = "utf8") {
   assertMethod(event, PayloadMethods$1);
@@ -923,6 +925,26 @@ function readRawBody(event, encoding = "utf8") {
   const result = encoding ? promise.then((buff) => buff.toString(encoding)) : promise;
   return result;
 }
+async function readBody(event, options = {}) {
+  const request = event.node.req;
+  if (hasProp(request, ParsedBodySymbol)) {
+    return request[ParsedBodySymbol];
+  }
+  const contentType = request.headers["content-type"] || "";
+  const body = await readRawBody(event);
+  let parsed;
+  if (contentType === "application/json") {
+    parsed = _parseJSON(body, options.strict ?? true);
+  } else if (contentType.startsWith("application/x-www-form-urlencoded")) {
+    parsed = _parseURLEncodedBody(body);
+  } else if (contentType.startsWith("text/")) {
+    parsed = body;
+  } else {
+    parsed = _parseJSON(body, options.strict ?? false);
+  }
+  request[ParsedBodySymbol] = parsed;
+  return parsed;
+}
 function getRequestWebStream(event) {
   if (!PayloadMethods$1.includes(event.method)) {
     return;
@@ -956,6 +978,35 @@ function getRequestWebStream(event) {
       });
     }
   });
+}
+function _parseJSON(body = "", strict) {
+  if (!body) {
+    return void 0;
+  }
+  try {
+    return destr(body, { strict });
+  } catch {
+    throw createError$1({
+      statusCode: 400,
+      statusMessage: "Bad Request",
+      message: "Invalid JSON body"
+    });
+  }
+}
+function _parseURLEncodedBody(body) {
+  const form = new URLSearchParams(body);
+  const parsedForm = /* @__PURE__ */ Object.create(null);
+  for (const [key, value] of form.entries()) {
+    if (hasProp(parsedForm, key)) {
+      if (!Array.isArray(parsedForm[key])) {
+        parsedForm[key] = [parsedForm[key]];
+      }
+      parsedForm[key].push(value);
+    } else {
+      parsedForm[key] = value;
+    }
+  }
+  return parsedForm;
 }
 
 function handleCacheHeaders(event, opts) {
@@ -4279,7 +4330,7 @@ function _expandFromEnv(value) {
 const _inlineRuntimeConfig = {
   "app": {
     "baseURL": "/",
-    "buildId": "42c853be-2b43-43aa-923f-8002cb22c339",
+    "buildId": "71962a08-5f42-4997-9457-7f0dd183648d",
     "buildAssetsDir": "/_nuxt/",
     "cdnURL": ""
   },
@@ -4899,9 +4950,23 @@ const _8Y5BCC = lazyEventHandler(() => {
   return useBase(opts.baseURL, ipxHandler);
 });
 
+const _lazy_N4G0jl = () => import('../routes/api/admin.mjs');
+const _lazy_WYtsGV = () => import('../routes/api/admin/admin.mjs');
+const _lazy_WTTsNZ = () => import('../routes/api/admin/settings.mjs');
+const _lazy_JLHA4u = () => import('../routes/api/admin/users.mjs');
+const _lazy_t33dKC = () => import('../routes/api/contact.mjs');
+const _lazy_7pJsE5 = () => import('../routes/api/contact/contact.mjs');
+const _lazy_gNLTAE = () => import('../routes/api/projects.mjs');
 const _lazy_ogmyJQ = () => import('../routes/renderer.mjs').then(function (n) { return n.r; });
 
 const handlers = [
+  { route: '/api/admin', handler: _lazy_N4G0jl, lazy: true, middleware: false, method: undefined },
+  { route: '/api/admin/admin', handler: _lazy_WYtsGV, lazy: true, middleware: false, method: undefined },
+  { route: '/api/admin/settings', handler: _lazy_WTTsNZ, lazy: true, middleware: false, method: undefined },
+  { route: '/api/admin/users', handler: _lazy_JLHA4u, lazy: true, middleware: false, method: undefined },
+  { route: '/api/contact', handler: _lazy_t33dKC, lazy: true, middleware: false, method: undefined },
+  { route: '/api/contact/contact', handler: _lazy_7pJsE5, lazy: true, middleware: false, method: undefined },
+  { route: '/api/projects', handler: _lazy_gNLTAE, lazy: true, middleware: false, method: undefined },
   { route: '/__nuxt_error', handler: _lazy_ogmyJQ, lazy: true, middleware: false, method: undefined },
   { route: '/__nuxt_island/**', handler: _SxA8c9, lazy: false, middleware: false, method: undefined },
   { route: '/api/_nuxt_icon/:collection', handler: _An9KNG, lazy: false, middleware: false, method: undefined },
@@ -5063,5 +5128,5 @@ const listener = function(req, res) {
   return handler(req, res);
 };
 
-export { $fetch$1 as $, withTrailingSlash as A, withoutTrailingSlash as B, listener as C, getResponseStatus as a, buildAssetsURL as b, getQuery as c, defineRenderHandler as d, createError$1 as e, destr as f, getResponseStatusText as g, getRouteRules as h, useNitroApp as i, defuFn as j, klona as k, hasProtocol as l, isScriptProtocol as m, joinURL as n, getContext as o, publicAssetsURL as p, baseURL as q, createHooks as r, sanitizeStatusCode as s, executeAsync as t, useRuntimeConfig as u, toRouteMatcher as v, withQuery as w, createRouter$1 as x, defu as y, parseQuery as z };
+export { $fetch$1 as $, createRouter$1 as A, defu as B, parseQuery as C, withTrailingSlash as D, withoutTrailingSlash as E, listener as F, getResponseStatusText as a, buildAssetsURL as b, createError$1 as c, defineEventHandler as d, getResponseStatus as e, defineRenderHandler as f, getHeader as g, getQuery as h, destr as i, getRouteRules as j, useNitroApp as k, klona as l, defuFn as m, hasProtocol as n, isScriptProtocol as o, publicAssetsURL as p, joinURL as q, readBody as r, sanitizeStatusCode as s, getContext as t, useRuntimeConfig as u, baseURL as v, withQuery as w, createHooks as x, executeAsync as y, toRouteMatcher as z };
 //# sourceMappingURL=nitro.mjs.map

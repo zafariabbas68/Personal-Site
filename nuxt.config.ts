@@ -27,6 +27,7 @@ export default defineNuxtConfig({
 
   devtools: { enabled: true },
 
+  // This is the key line - Vercel support is built into Nuxt
   nitro: {
     preset: 'vercel'
   },

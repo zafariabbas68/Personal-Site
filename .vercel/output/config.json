@@ -66,6 +66,10 @@
       "dest": "/projects"
     },
     {
+      "src": "/index-clean",
+      "dest": "/index-clean"
+    },
+    {
       "src": "/experience",
       "dest": "/experience"
     },
@@ -78,8 +82,40 @@
       "dest": "/contact"
     },
     {
+      "src": "/clean-test",
+      "dest": "/clean-test"
+    },
+    {
       "src": "/blog",
       "dest": "/blog"
+    },
+    {
+      "src": "/api/projects",
+      "dest": "/api/projects"
+    },
+    {
+      "src": "/api/contact/contact",
+      "dest": "/api/contact/contact"
+    },
+    {
+      "src": "/api/contact",
+      "dest": "/api/contact"
+    },
+    {
+      "src": "/api/admin/users",
+      "dest": "/api/admin/users"
+    },
+    {
+      "src": "/api/admin/settings",
+      "dest": "/api/admin/settings"
+    },
+    {
+      "src": "/api/admin/admin",
+      "dest": "/api/admin/admin"
+    },
+    {
+      "src": "/api/admin",
+      "dest": "/api/admin"
     },
     {
       "src": "/about",
