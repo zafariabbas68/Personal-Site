@@ -1,4 +1,3 @@
-cat > vercel.json << 'EOF'
 {
   "version": 3,
   "builds": [
@@ -6,12 +5,5 @@ cat > vercel.json << 'EOF'
       "src": "package.json",
       "use": "@vercel/nuxt"
     }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/"
-    }
   ]
 }
-EOF
