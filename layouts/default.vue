@@ -1,6 +1,7 @@
 <!-- layouts/default.vue -->
 <template>
   <div class="layout">
+    <Navigation />
     <main>
       <slot />
     </main>
@@ -9,6 +10,7 @@
 </template>
 
 <script setup>
+import Navigation from '~/components/Layout/Navigation.vue'
 import Footer from '~/components/Layout/Footer.vue'
 </script>
 
@@ -21,5 +23,6 @@ import Footer from '~/components/Layout/Footer.vue'
 
 main {
   flex: 1;
+  padding-top: 80px; /* Add padding to account for fixed header */
 }
 </style>

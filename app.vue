@@ -1,6 +1,8 @@
+<!-- app.vue -->
 <template>
   <div>
-    <h1>Minimal Test</h1>
-    <NuxtPage />
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
   </div>
 </template>

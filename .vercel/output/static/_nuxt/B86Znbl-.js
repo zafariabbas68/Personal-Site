@@ -1,1 +1,0 @@
-import{c as o,a as t,o as r}from"./j5nOeVHd.js";const n={__name:"clean-test",setup(s){return(a,e)=>(r(),o("div",null,[...e[0]||(e[0]=[t("h1",null,"Clean Test Page",-1),t("p",null,"This should work without errors",-1)])]))}};export{n as default};

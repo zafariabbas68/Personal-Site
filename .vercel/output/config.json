@@ -66,10 +66,6 @@
       "dest": "/projects"
     },
     {
-      "src": "/index-clean",
-      "dest": "/index-clean"
-    },
-    {
       "src": "/experience",
       "dest": "/experience"
     },
@@ -80,10 +76,6 @@
     {
       "src": "/contact",
       "dest": "/contact"
-    },
-    {
-      "src": "/clean-test",
-      "dest": "/clean-test"
     },
     {
       "src": "/blog",
