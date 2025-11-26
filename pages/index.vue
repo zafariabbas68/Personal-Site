@@ -6,7 +6,7 @@
       <div class="header-content">
         <div class="container nav-container">
           <NuxtLink to="/" class="logo">
-            <span class="logo-icon"><i class="fas fa-map-marked-alt"></i></span>
+            <span class="logo-icon"><i class="fas fa-graduation-cap"></i></span>
             <span>Ghulam Abbas Zafari</span>
           </NuxtLink>
           <ul class="nav-links" :class="{ active: isMenuOpen }" id="navLinks">
@@ -57,9 +57,9 @@
           <defs>
             <!-- Main Earth Gradient -->
             <linearGradient id="earthGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#1a3c27" />
-              <stop offset="50%" stop-color="#2C5530" />
-              <stop offset="100%" stop-color="#1a3c27" />
+              <stop offset="0%" stop-color="#0f1e3d" />
+              <stop offset="50%" stop-color="#1a365d" />
+              <stop offset="100%" stop-color="#0f1e3d" />
             </linearGradient>
 
             <!-- Enhanced Contour Gradient -->
@@ -192,6 +192,12 @@
             </span>
           </h1>
           <p class="hero-subtitle">Geoinformatics Engineer | GIS Specialist | Remote Sensing Expert</p>
+          <div class="education-support">
+            <div class="support-icon">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <p class="support-text">Supporting Education for Afghan Women</p>
+          </div>
           <div class="hero-buttons">
             <NuxtLink to="#featured-projects" class="btn primary-btn">
               View My Work <i class="fas fa-arrow-right"></i>
@@ -275,6 +281,31 @@
       </div>
     </section>
 
+    <!-- Education Support Section -->
+    <section class="education-section" id="education-support">
+      <div class="container">
+        <div class="section-header" :class="{ visible: isSectionVisible.education }">
+          <h2 class="section-title">Education For All</h2>
+          <p class="section-subtitle">Supporting the fundamental right to education for Afghan women and girls</p>
+        </div>
+        <div class="education-content">
+          <div class="education-message">
+            <div class="education-icon">
+              <i class="fas fa-book-reader"></i>
+            </div>
+            <h3 class="education-title">Knowledge Knows No Boundaries</h3>
+            <p>Education is a fundamental human right that should be accessible to everyone, regardless of gender, ethnicity, or geographical location. As a professional in geospatial sciences, I believe in the power of knowledge to transform lives and communities.</p>
+            <p>I stand in solidarity with Afghan women and girls who face immense challenges in accessing education. The pursuit of knowledge is essential for building a better future, and every individual deserves the opportunity to learn, grow, and contribute to society.</p>
+            <div class="education-quote">
+              <i class="fas fa-quote-left"></i>
+              <p>"Education is the most powerful weapon which you can use to change the world."</p>
+              <span>- Nelson Mandela</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Call to Action -->
     <section class="cta-section" id="cta">
       <div class="container">
@@ -304,6 +335,7 @@ const currentLanguage = ref('en')
 const isSectionVisible = ref({
   expertise: false,
   projects: false,
+  education: false,
   'skill-0': false,
   'skill-1': false,
   'skill-2': false,
@@ -420,12 +452,16 @@ const animateOnScroll = () => {
 
     if (sectionTop < triggerPoint) {
       const id = section.classList.contains('section-header')
-        ? (section.parentElement.id === 'expertise' ? 'expertise' : 'projects')
+        ? (section.parentElement.parentElement.id === 'expertise' ? 'expertise' :
+           section.parentElement.parentElement.id === 'featured-projects' ? 'projects' :
+           section.parentElement.parentElement.id === 'education-support' ? 'education' : '')
         : section.classList.contains('skill-card')
           ? `skill-${Array.from(section.parentElement.children).indexOf(section)}`
           : `project-${Array.from(section.parentElement.children).indexOf(section)}`
 
-      isSectionVisible.value[id] = true
+      if (id) {
+        isSectionVisible.value[id] = true
+      }
     }
   })
 }
@@ -475,13 +511,13 @@ useSeoMeta({
 /* Import Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
 
-/* CSS Variables */
+/* CSS Variables - UPDATED EDUCATION COLORS */
 :root {
-  --primary-earth: #2C5530;
-  --secondary-water: #2E86AB;
-  --accent-sky: #4A90E2;
-  --neutral-light: #F8F9FA;
-  --neutral-dark: #2D3748;
+  --primary-earth: #1a365d;        /* Deep blue for hero section */
+  --secondary-water: #2E86AB;      /* Professional blue accent */
+  --accent-sky: #4A90E2;           /* Bright blue for highlights */
+  --neutral-light: #F8F9FA;        /* Light background */
+  --neutral-dark: #0f1e3d;         /* Dark navy blue for footer */
   --earth-brown: #8B7355;
   --earth-sand: #D7C9AA;
   --earth-rock: #6B705C;
@@ -491,6 +527,9 @@ useSeoMeta({
   --afghan-red: #D32011;
   --afghan-green: #007A36;
   --afghan-gold: #C19A6B;
+  --education-gold: #FFD700;       /* NEW: Bright gold for education titles */
+  --education-light: #FFF8DC;      /* NEW: Light golden background */
+  --education-accent: #B8860B;     /* NEW: Dark golden accent */
   --card-bg: #FFFFFF;
   --footer-bg: var(--neutral-dark);
   --transition: all 0.3s ease;
@@ -583,7 +622,32 @@ header {
 .logo-icon {
   margin-right: 10px;
   font-size: 1.8rem;
-  color: var(--secondary-water);
+  color: var(--education-gold); /* Updated to use education gold */
+  position: relative;
+}
+
+.logo-icon::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 50%;
+  background: rgba(255, 215, 0, 0.3); /* Updated to gold glow */
+  animation: educationPulse 2s ease-in-out infinite;
+  z-index: -1;
+}
+
+@keyframes educationPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
 }
 
 .nav-links {
@@ -724,7 +788,7 @@ header {
   font-size: 1rem;
 }
 
-/* Menu Toggle Button - FIXED */
+/* Menu Toggle Button */
 .menu-toggle {
   display: none;
   cursor: pointer;
@@ -742,7 +806,7 @@ header {
   color: var(--secondary-water);
 }
 
-/* Enhanced Hero Section with Better Background Visibility */
+/* Enhanced Hero Section */
 .hero {
   padding: 6rem 0 4rem;
   color: white;
@@ -753,7 +817,7 @@ header {
   display: flex;
   align-items: center;
   margin-top: 80px;
-  background: linear-gradient(135deg, var(--primary-earth) 0%, #1a3c27 100%);
+  background: linear-gradient(135deg, var(--primary-earth) 0%, var(--neutral-dark) 100%);
 }
 
 .geospatial-background {
@@ -1000,7 +1064,7 @@ header {
   position: relative;
   z-index: 2;
   text-align: left;
-  background: rgba(44, 85, 48, 0.3);
+  background: rgba(26, 54, 93, 0.3);
   backdrop-filter: blur(10px);
   padding: 2rem;
   border-radius: 12px;
@@ -1020,12 +1084,48 @@ header {
 
 .hero-subtitle {
   font-size: 1.3rem;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.5rem;
   color: rgba(255, 255, 255, 0.95);
   font-weight: 400;
   font-family: 'Poppins', sans-serif;
-  margin-top: 2.5rem;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Education Support Section in Hero */
+.education-support {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem 0;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  border-left: 4px solid var(--education-gold);
+}
+
+.support-icon {
+  font-size: 2rem;
+  color: var(--education-gold);
+  animation: gentlePulse 2s ease-in-out infinite;
+}
+
+@keyframes gentlePulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+.support-text {
+  color: white;
+  font-weight: 500;
+  font-size: 1rem;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
 }
 
 .highlight {
@@ -1071,7 +1171,7 @@ header {
   display: flex;
   justify-content: flex-start;
   gap: 1rem;
-  margin-top: 3rem;
+  margin-top: 1rem;
 }
 
 .btn {
@@ -1157,7 +1257,7 @@ header {
   border-radius: 50%;
   overflow: hidden;
   box-shadow:
-    0 20px 50px rgba(44, 85, 48, 0.4),
+    0 20px 50px rgba(26, 54, 93, 0.4),
     0 0 0 4px rgba(215, 201, 170, 0.8),
     0 0 30px rgba(215, 201, 170, 0.6);
   border: 4px solid var(--earth-sand);
@@ -1169,7 +1269,7 @@ header {
 .image-wrapper:hover {
   transform: scale(1.05);
   box-shadow:
-    0 25px 60px rgba(44, 85, 48, 0.5),
+    0 25px 60px rgba(26, 54, 93, 0.5),
     0 0 0 4px rgba(215, 201, 170, 0.9),
     0 0 40px rgba(215, 201, 170, 0.8);
 }
@@ -1208,7 +1308,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 5px 15px rgba(44, 85, 48, 0.1);
+  box-shadow: 0 5px 15px rgba(26, 54, 93, 0.1);
   font-size: 1.4rem;
   color: var(--secondary-water);
   transition: var(--transition);
@@ -1231,7 +1331,7 @@ header {
 .tech-icons .icon:hover {
   transform: translateY(-5px) scale(1.1);
   color: var(--primary-earth);
-  box-shadow: 0 10px 25px rgba(44, 85, 48, 0.3);
+  box-shadow: 0 10px 25px rgba(26, 54, 93, 0.3);
   animation-play-state: paused;
 }
 
@@ -1295,7 +1395,7 @@ header {
   padding: 2rem;
   transition: var(--transition);
   border-left: 4px solid var(--secondary-water);
-  box-shadow: 0 10px 30px rgba(44, 85, 48, 0.1);
+  box-shadow: 0 10px 30px rgba(26, 54, 93, 0.1);
   opacity: 0;
   transform: translateY(30px);
   transition: all 0.8s ease;
@@ -1309,7 +1409,7 @@ header {
 
 .skill-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 15px 30px rgba(44, 85, 48, 0.15);
+  box-shadow: 0 15px 30px rgba(26, 54, 93, 0.15);
 }
 
 .skill-icon {
@@ -1379,7 +1479,7 @@ header {
   border-radius: 8px;
   overflow: hidden;
   transition: var(--transition);
-  box-shadow: 0 10px 30px rgba(44, 85, 48, 0.1);
+  box-shadow: 0 10px 30px rgba(26, 54, 93, 0.1);
   opacity: 0;
   transform: translateY(30px);
   transition: all 0.8s ease;
@@ -1394,7 +1494,7 @@ header {
 
 .project-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 15px 30px rgba(44, 85, 48, 0.15);
+  box-shadow: 0 15px 30px rgba(26, 54, 93, 0.15);
   border-color: var(--secondary-water);
 }
 
@@ -1470,6 +1570,117 @@ header {
 .project-link:hover {
   gap: 10px;
   color: var(--primary-earth);
+}
+
+/* Education Support Section - UPDATED COLORS FOR BETTER VISIBILITY */
+.education-section {
+  padding: 5rem 0;
+  background: linear-gradient(135deg, var(--primary-earth) 0%, var(--neutral-dark) 100%);
+  color: white;
+  position: relative;
+}
+
+.education-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffd700' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+  opacity: 0.3;
+}
+
+.education-content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.education-message {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  padding: 3rem;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.education-icon {
+  font-size: 4rem;
+  color: var(--education-gold);
+  margin-bottom: 2rem;
+  animation: gentlePulse 3s ease-in-out infinite;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+/* UPDATED: Education Section Titles for Better Visibility */
+.education-section .section-title {
+  color: var(--education-gold) !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7) !important;
+  font-size: 2.8rem !important;
+  margin-bottom: 1rem !important;
+}
+
+.education-section .section-subtitle {
+  color: var(--education-light) !important;
+  font-size: 1.3rem !important;
+  font-weight: 500 !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) !important;
+  max-width: 700px !important;
+}
+
+.education-title {
+  color: var(--education-gold) !important;
+  font-size: 2.2rem !important;
+  margin-bottom: 1.5rem !important;
+  font-family: 'Playfair Display', serif !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5) !important;
+  font-weight: 700 !important;
+}
+
+.education-message p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  font-family: 'Poppins', sans-serif;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.education-quote {
+  background: rgba(255, 215, 0, 0.1);
+  padding: 2rem;
+  border-radius: 12px;
+  margin-top: 2rem;
+  border-left: 4px solid var(--education-gold);
+  border-right: 4px solid var(--education-gold);
+}
+
+.education-quote i {
+  font-size: 2rem;
+  color: var(--education-gold);
+  margin-bottom: 1rem;
+  display: block;
+  text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+}
+
+.education-quote p {
+  font-style: italic;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: var(--education-light);
+  font-weight: 500;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+.education-quote span {
+  color: var(--education-gold);
+  font-weight: 600;
+  font-size: 1rem;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 /* Call to Action Section */
@@ -1603,6 +1814,11 @@ header {
     font-size: 1.1rem;
   }
 
+  .education-support {
+    flex-direction: column;
+    text-align: center;
+  }
+
   .image-wrapper {
     width: 220px;
     height: 220px;
@@ -1616,6 +1832,26 @@ header {
     width: 45px;
     height: 45px;
     font-size: 1.2rem;
+  }
+
+  .education-message {
+    padding: 2rem;
+  }
+
+  .education-icon {
+    font-size: 3rem;
+  }
+
+  .education-title {
+    font-size: 1.8rem !important;
+  }
+
+  .education-section .section-title {
+    font-size: 2.2rem !important;
+  }
+
+  .education-section .section-subtitle {
+    font-size: 1.1rem !important;
   }
 }
 
@@ -1657,9 +1893,33 @@ header {
   .flag-line {
     width: 90%;
   }
+
+  .education-message {
+    padding: 1.5rem;
+  }
+
+  .education-icon {
+    font-size: 2.5rem;
+  }
+
+  .education-title {
+    font-size: 1.5rem !important;
+  }
+
+  .education-section .section-title {
+    font-size: 2rem !important;
+  }
+
+  .education-section .section-subtitle {
+    font-size: 1rem !important;
+  }
+
+  .education-quote p {
+    font-size: 1.1rem;
+  }
 }
 
-/* Mobile Navigation - FIXED */
+/* Mobile Navigation */
 @media (max-width: 768px) {
   .menu-toggle {
     display: block;
