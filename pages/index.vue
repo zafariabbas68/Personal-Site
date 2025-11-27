@@ -1,4 +1,3 @@
-<!-- pages/index.vue -->
 <template>
   <div class="portfolio-home">
     <!-- Navigation -->
@@ -17,24 +16,21 @@
             <li><NuxtLink to="/experience" data-i18n="experience">Experience</NuxtLink></li>
             <li><NuxtLink to="/blog" data-i18n="blog">Blog</NuxtLink></li>
             <li class="language-selector">
-              <div class="language-dropdown">
+              <div class="language-dropdown" @mouseenter="showLanguageOptions = true" @mouseleave="showLanguageOptions = false">
                 <button class="language-btn">
                   <i class="fas fa-globe"></i>
                   <span class="current-language">{{ currentLanguage.toUpperCase() }}</span>
                   <i class="fas fa-chevron-down" style="font-size: 0.8rem; margin-left: 5px;"></i>
                 </button>
-                <ul class="language-options">
-                  <li :class="{ active: currentLanguage === 'en' }" @click="changeLanguage('en')">
-                    <span class="language-flag">🇺🇸</span>
-                    English
-                  </li>
-                  <li :class="{ active: currentLanguage === 'it' }" @click="changeLanguage('it')">
-                    <span class="language-flag">🇮🇹</span>
-                    Italiano
-                  </li>
-                  <li :class="{ active: currentLanguage === 'fa' }" @click="changeLanguage('fa')">
-                    <span class="language-flag">🇮🇷</span>
-                    فارسی
+                <ul class="language-options" :class="{ active: showLanguageOptions }">
+                  <li
+                    v-for="lang in languages"
+                    :key="lang.code"
+                    :class="{ active: currentLanguage === lang.code }"
+                    @click="changeLanguage(lang.code)"
+                  >
+                    <span class="language-flag">{{ lang.flag }}</span>
+                    {{ lang.name }}
                   </li>
                 </ul>
               </div>
@@ -48,14 +44,137 @@
       </div>
     </header>
 
-    <!-- Hero Section with Simplified Background for Mobile -->
+    <!-- Hero Section with Enhanced Geospatial Background -->
     <section class="hero" id="hero">
-      <!-- Simplified Background for Mobile Performance -->
+      <!-- Enhanced Geospatial SVG Background -->
       <div class="geospatial-background">
-        <div class="mobile-background"></div>
-        <svg class="topography-svg desktop-only" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
-          <!-- Keep your existing SVG code here -->
-          <!-- ... (your existing SVG content) ... -->
+        <svg class="topography-svg" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+          <!-- Enhanced Gradients -->
+          <defs>
+            <!-- Main Earth Gradient -->
+            <linearGradient id="earthGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#0f1e3d" />
+              <stop offset="50%" stop-color="#1a365d" />
+              <stop offset="100%" stop-color="#0f1e3d" />
+            </linearGradient>
+
+            <!-- Enhanced Contour Gradient -->
+            <linearGradient id="contourGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#4A90E2" stop-opacity="0.4" />
+              <stop offset="50%" stop-color="#2E86AB" stop-opacity="0.6" />
+              <stop offset="100%" stop-color="#4A90E2" stop-opacity="0.4" />
+            </linearGradient>
+
+            <!-- Data Point Glow -->
+            <radialGradient id="dataGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#4A90E2" stop-opacity="0.8" />
+              <stop offset="70%" stop-color="#2E86AB" stop-opacity="0.4" />
+              <stop offset="100%" stop-color="#4A90E2" stop-opacity="0" />
+            </radialGradient>
+
+            <!-- Enhanced Glow Filter -->
+            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+
+          <!-- Base Earth with Enhanced Visibility -->
+          <rect width="100%" height="100%" fill="url(#earthGradient)" opacity="0.9" />
+
+          <!-- Enhanced Grid System -->
+          <g class="grid-lines" stroke="#2E86AB" stroke-opacity="0.15" stroke-width="1.5">
+            <path d="M0,0 L1200,0 M0,100 L1200,100 M0,200 L1200,200 M0,300 L1200,300 M0,400 L1200,400 M0,500 L1200,500 M0,600 L1200,600 M0,700 L1200,700 M0,800 L1200,800" />
+            <path d="M0,0 L0,800 M100,0 L100,800 M200,0 L200,800 M300,0 L300,800 M400,0 L400,800 M500,0 L500,800 M600,0 L600,800 M700,0 L700,800 M800,0 L800,800 M900,0 L900,800 M1000,0 L1000,800 M1100,0 L1100,800 M1200,0 L1200,800" />
+          </g>
+
+          <!-- Enhanced Topography Contours -->
+          <g class="contours-group">
+            <path class="contour-line contour-1" d="M0,350 Q150,320 300,350 T600,350 T900,350 T1200,350" />
+            <path class="contour-line contour-2" d="M0,400 Q150,370 300,400 T600,400 T900,400 T1200,400" />
+            <path class="contour-line contour-3" d="M0,450 Q150,420 300,450 T600,450 T900,450 T1200,450" />
+            <path class="contour-line contour-4" d="M0,500 Q150,470 300,500 T600,500 T900,500 T1200,500" />
+            <path class="contour-line contour-5" d="M0,550 Q150,520 300,550 T600,550 T900,550 T1200,550" />
+            <path class="contour-line contour-6" d="M0,300 Q150,270 300,300 T600,300 T900,300 T1200,300" />
+          </g>
+
+          <!-- Enhanced Data Points Network -->
+          <g class="data-points">
+            <!-- Primary Data Cluster -->
+            <g class="data-cluster-1">
+              <circle class="data-point primary" cx="300" cy="350" r="5" />
+              <circle class="data-point secondary" cx="250" cy="320" r="3" />
+              <circle class="data-point secondary" cx="350" cy="330" r="3" />
+              <circle class="data-point secondary" cx="280" cy="380" r="3" />
+            </g>
+
+            <!-- Secondary Data Cluster -->
+            <g class="data-cluster-2">
+              <circle class="data-point primary" cx="600" cy="400" r="5" />
+              <circle class="data-point secondary" cx="550" cy="370" r="3" />
+              <circle class="data-point secondary" cx="650" cy="380" r="3" />
+              <circle class="data-point secondary" cx="580" cy="430" r="3" />
+            </g>
+
+            <!-- Tertiary Data Cluster -->
+            <g class="data-cluster-3">
+              <circle class="data-point primary" cx="900" cy="450" r="5" />
+              <circle class="data-point secondary" cx="850" cy="420" r="3" />
+              <circle class="data-point secondary" cx="950" cy="430" r="3" />
+              <circle class="data-point secondary" cx="880" cy="480" r="3" />
+            </g>
+          </g>
+
+          <!-- Enhanced Connection Lines -->
+          <g class="connection-lines">
+            <path class="connection connection-1" d="M300,350 L600,400" />
+            <path class="connection connection-2" d="M600,400 L900,450" />
+            <path class="connection connection-3" d="M250,320 L550,370" />
+            <path class="connection connection-4" d="M350,330 L650,380" />
+            <path class="connection connection-5" d="M280,380 L580,430" />
+            <path class="connection connection-6" d="M550,370 L850,420" />
+            <path class="connection connection-7" d="M650,380 L950,430" />
+            <path class="connection connection-8" d="M580,430 L880,480" />
+          </g>
+
+          <!-- Satellite System -->
+          <g class="satellite-system">
+            <!-- Orbits -->
+            <circle class="orbit orbit-1" cx="600" cy="400" r="180" />
+            <circle class="orbit orbit-2" cx="600" cy="400" r="280" />
+            <circle class="orbit orbit-3" cx="600" cy="400" r="380" />
+
+            <!-- Satellites -->
+            <g class="satellites">
+              <circle class="satellite satellite-1" cx="780" cy="400" r="6">
+                <animateTransform attributeName="transform" type="rotate" from="0 600 400" to="360 600 400" dur="25s" repeatCount="indefinite" />
+              </circle>
+              <circle class="satellite satellite-2" cx="600" cy="220" r="5">
+                <animateTransform attributeName="transform" type="rotate" from="120 600 400" to="480 600 400" dur="30s" repeatCount="indefinite" />
+              </circle>
+              <circle class="satellite satellite-3" cx="420" cy="400" r="4">
+                <animateTransform attributeName="transform" type="rotate" from="240 600 400" to="600 600 400" dur="35s" repeatCount="indefinite" />
+              </circle>
+            </g>
+          </g>
+
+          <!-- Map Coordinates -->
+          <g class="coordinates" fill="#ffffff" font-family="Arial" font-size="12" opacity="0.3">
+            <text x="50" y="30">45°N</text>
+            <text x="1150" y="30">45°N</text>
+            <text x="50" y="770">45°S</text>
+            <text x="1150" y="770">45°S</text>
+            <text x="30" y="400" transform="rotate(-90 30,400)">0°</text>
+            <text x="1170" y="400" transform="rotate(90 1170,400)">180°</text>
+          </g>
+
+          <!-- Scan Lines Effect -->
+          <g class="scan-lines">
+            <rect class="scan-line" x="0" y="0" width="100%" height="2" fill="#4A90E2" opacity="0.1" />
+          </g>
         </svg>
       </div>
 
@@ -209,6 +328,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 const showScrollTop = ref(false)
 const isMenuOpen = ref(false)
 const currentLanguage = ref('en')
+const showLanguageOptions = ref(false)
 const isSectionVisible = ref({
   expertise: false,
   projects: false,
@@ -224,6 +344,13 @@ const isSectionVisible = ref({
   'project-5': false
 })
 
+// Languages data
+const languages = [
+  { code: 'en', name: 'English', flag: '🇺🇸' },
+  { code: 'it', name: 'Italiano', flag: '🇮🇹' },
+  { code: 'fa', name: 'فارسی', flag: '🇮🇷' }
+]
+
 // Navigation methods
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value
@@ -237,8 +364,8 @@ const toggleMenu = () => {
 
 const changeLanguage = (lang) => {
   currentLanguage.value = lang
+  showLanguageOptions.value = false
   // Here you would typically load translations
-  // For now, we'll just update the language state
   console.log('Language changed to:', lang)
 }
 
@@ -351,19 +478,21 @@ const scrollToTop = () => {
   })
 }
 
+// Close menu when clicking outside
+const handleClickOutside = (event) => {
+  if (!event.target.closest('.nav-container')) {
+    isMenuOpen.value = false
+    document.body.classList.remove('menu-open')
+  }
+}
+
 // Lifecycle hooks
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
+  document.addEventListener('click', handleClickOutside)
+
   // Initial check for elements in view
   animateOnScroll()
-
-  // Close menu when clicking outside and handle route changes
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('.nav-container')) {
-      isMenuOpen.value = false
-      document.body.classList.remove('menu-open')
-    }
-  })
 
   // Close menu when route changes
   const router = useRouter()
@@ -375,6 +504,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
+  document.removeEventListener('click', handleClickOutside)
 })
 
 // SEO Meta
@@ -441,17 +571,17 @@ h1, h2, h3, h4 {
 }
 
 h1 {
-  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-size: 3.2rem;
   font-weight: 700;
 }
 
 h2 {
-  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-size: 2.5rem;
   color: var(--primary-earth);
 }
 
 h3 {
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-size: 2rem;
   color: var(--secondary-water);
 }
 
@@ -489,7 +619,7 @@ header {
   display: flex;
   align-items: center;
   font-weight: 600;
-  font-size: clamp(1rem, 4vw, 1.4rem);
+  font-size: 1.4rem;
   color: var(--primary-earth);
   text-decoration: none;
   font-family: 'Playfair Display', serif;
@@ -498,7 +628,7 @@ header {
 
 .logo-icon {
   margin-right: 10px;
-  font-size: clamp(1.2rem, 4vw, 1.8rem);
+  font-size: 1.8rem;
   color: var(--education-gold); /* Updated to use education gold */
   position: relative;
 }
@@ -536,7 +666,7 @@ header {
 }
 
 .nav-links li {
-  margin-left: 1.5rem;
+  margin-left: 2rem;
   position: relative;
 }
 
@@ -547,7 +677,7 @@ header {
   transition: all 0.3s ease;
   padding: 0.5rem 0;
   position: relative;
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-family: 'Poppins', sans-serif;
 }
 
@@ -573,7 +703,7 @@ header {
 .contact-btn {
   background: transparent;
   color: var(--secondary-water);
-  padding: 0.7rem 1.5rem;
+  padding: 0.7rem 1.8rem;
   border-radius: 4px;
   transition: all 0.3s ease;
   font-weight: 500;
@@ -598,7 +728,7 @@ header {
   color: var(--neutral-dark);
   cursor: pointer;
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   display: flex;
   align-items: center;
   gap: 5px;
@@ -631,7 +761,7 @@ header {
   border: 1px solid rgba(139, 115, 85, 0.2);
 }
 
-.language-dropdown:hover .language-options {
+.language-options.active {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
@@ -707,25 +837,216 @@ header {
   opacity: 0.85;
 }
 
-.mobile-background {
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, var(--primary-earth) 0%, var(--neutral-dark) 100%);
-  z-index: 1;
-}
-
-.desktop-only {
-  display: block;
-}
-
 .topography-svg {
   width: 100%;
   height: 100%;
   opacity: 1;
+}
+
+/* Enhanced Contour Lines */
+.contour-line {
+  fill: none;
+  stroke: url(#contourGradient);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  filter: url(#glow);
+}
+
+.contour-1 { animation: contourFloat 12s ease-in-out infinite; }
+.contour-2 { animation: contourFloat 14s ease-in-out infinite 1s; }
+.contour-3 { animation: contourFloat 16s ease-in-out infinite 2s; }
+.contour-4 { animation: contourFloat 18s ease-in-out infinite 3s; }
+.contour-5 { animation: contourFloat 20s ease-in-out infinite 4s; }
+.contour-6 { animation: contourFloat 22s ease-in-out infinite 5s; }
+
+@keyframes contourFloat {
+  0%, 100% {
+    transform: translateY(0px);
+    opacity: 0.6;
+    stroke-width: 2.5;
+  }
+  25% {
+    transform: translateY(-3px);
+    opacity: 0.8;
+    stroke-width: 3;
+  }
+  50% {
+    transform: translateY(-6px);
+    opacity: 1;
+    stroke-width: 3.5;
+  }
+  75% {
+    transform: translateY(-3px);
+    opacity: 0.8;
+    stroke-width: 3;
+  }
+}
+
+/* Enhanced Data Points */
+.data-point {
+  fill: url(#dataGlow);
+  filter: url(#glow);
+  stroke: #ffffff;
+  stroke-width: 1;
+  stroke-opacity: 0.5;
+}
+
+.data-point.primary {
+  animation: dataPulse 4s ease-in-out infinite;
+  r: 6;
+}
+
+.data-point.secondary {
+  animation: dataPulse 3s ease-in-out infinite;
+  r: 4;
+}
+
+.data-cluster-1 .data-point { animation-delay: 0s; }
+.data-cluster-2 .data-point { animation-delay: 0.5s; }
+.data-cluster-3 .data-point { animation-delay: 1s; }
+
+@keyframes dataPulse {
+  0%, 100% {
+    r: var(--base-size, 4);
+    opacity: 0.7;
+    stroke-width: 1;
+  }
+  50% {
+    r: calc(var(--base-size, 4) + 2);
+    opacity: 1;
+    stroke-width: 2;
+  }
+}
+
+.data-point.primary {
+  --base-size: 6;
+}
+
+.data-point.secondary {
+  --base-size: 4;
+}
+
+/* Enhanced Connection Lines */
+.connection {
+  fill: none;
+  stroke: #4A90E2;
+  stroke-width: 1.5;
+  stroke-dasharray: 8 4;
+  stroke-opacity: 0.6;
+  filter: url(#glow);
+}
+
+.connection-1 { animation: connectionFlow 6s linear infinite; }
+.connection-2 { animation: connectionFlow 7s linear infinite 0.5s; }
+.connection-3 { animation: connectionFlow 8s linear infinite 1s; }
+.connection-4 { animation: connectionFlow 9s linear infinite 1.5s; }
+.connection-5 { animation: connectionFlow 10s linear infinite 2s; }
+.connection-6 { animation: connectionFlow 11s linear infinite 2.5s; }
+.connection-7 { animation: connectionFlow 12s linear infinite 3s; }
+.connection-8 { animation: connectionFlow 13s linear infinite 3.5s; }
+
+@keyframes connectionFlow {
+  0% {
+    stroke-dashoffset: 24;
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0.3;
+  }
+}
+
+/* Enhanced Grid System */
+.grid-lines {
+  animation: gridMove 40s linear infinite;
+}
+
+@keyframes gridMove {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(30px, 30px);
+  }
+}
+
+/* Enhanced Satellite System */
+.orbit {
+  fill: none;
+  stroke: #4A90E2;
+  stroke-opacity: 0.25;
+  stroke-width: 1.5;
+  stroke-dasharray: 4 8;
+}
+
+.orbit-1 { animation: orbitPulse 8s ease-in-out infinite; }
+.orbit-2 { animation: orbitPulse 10s ease-in-out infinite 1s; }
+.orbit-3 { animation: orbitPulse 12s ease-in-out infinite 2s; }
+
+@keyframes orbitPulse {
+  0%, 100% {
+    stroke-opacity: 0.2;
+    stroke-dasharray: 4 8;
+  }
+  50% {
+    stroke-opacity: 0.4;
+    stroke-dasharray: 8 4;
+  }
+}
+
+.satellite {
+  fill: #FFD700;
+  stroke: #FFA500;
+  stroke-width: 1;
+  filter: url(#glow);
+}
+
+.satellite-1 {
+  animation: satelliteGlow 3s ease-in-out infinite;
+}
+
+.satellite-2 {
+  animation: satelliteGlow 4s ease-in-out infinite 1s;
+}
+
+.satellite-3 {
+  animation: satelliteGlow 5s ease-in-out infinite 2s;
+}
+
+@keyframes satelliteGlow {
+  0%, 100% {
+    r: 4;
+    opacity: 0.7;
+  }
+  50% {
+    r: 6;
+    opacity: 1;
+  }
+}
+
+/* Enhanced Scan Lines */
+.scan-line {
+  animation: scanMove 15s linear infinite;
+}
+
+@keyframes scanMove {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.3;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(800px);
+    opacity: 0;
+  }
 }
 
 /* Enhanced Hero Container for Better Readability */
@@ -737,8 +1058,8 @@ header {
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 3rem;
+  grid-template-columns: 1fr 400px;
+  gap: 4rem;
   align-items: center;
 }
 
@@ -749,7 +1070,7 @@ header {
   animation: fadeInUp 1s ease forwards;
   position: relative;
   z-index: 2;
-  text-align: center;
+  text-align: left;
   background: rgba(26, 54, 93, 0.3);
   backdrop-filter: blur(10px);
   padding: 2rem;
@@ -760,7 +1081,7 @@ header {
 .hero-title {
   font-family: 'Playfair Display', serif;
   font-weight: 700;
-  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-size: 3.2rem;
   margin-bottom: 1.5rem;
   line-height: 1.2;
   color: white;
@@ -769,7 +1090,7 @@ header {
 }
 
 .hero-subtitle {
-  font-size: clamp(1rem, 3vw, 1.3rem);
+  font-size: 1.3rem;
   margin-bottom: 1.5rem;
   color: rgba(255, 255, 255, 0.95);
   font-weight: 400;
@@ -781,7 +1102,6 @@ header {
 .education-support {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 1rem;
   margin: 2rem 0;
   padding: 1rem;
@@ -791,7 +1111,7 @@ header {
 }
 
 .support-icon {
-  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-size: 2rem;
   color: var(--education-gold);
   animation: gentlePulse 2s ease-in-out infinite;
 }
@@ -810,7 +1130,7 @@ header {
 .support-text {
   color: white;
   font-weight: 500;
-  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  font-size: 1rem;
   margin: 0;
   font-family: 'Poppins', sans-serif;
 }
@@ -856,14 +1176,13 @@ header {
 /* Enhanced Buttons for Better Contrast */
 .hero-buttons {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 1rem;
   margin-top: 1rem;
-  flex-wrap: wrap;
 }
 
 .btn {
-  padding: 0.8rem 1.5rem;
+  padding: 0.8rem 2rem;
   border-radius: 4px;
   font-weight: 500;
   transition: var(--transition);
@@ -877,8 +1196,6 @@ header {
   box-shadow: 0 4px 15px rgba(46, 134, 171, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
-  min-width: 160px;
-  text-align: center;
 }
 
 .btn::before {
@@ -938,13 +1255,12 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  order: -1;
 }
 
 .image-wrapper {
   position: relative;
-  width: clamp(200px, 50vw, 280px);
-  height: clamp(200px, 50vw, 280px);
+  width: 280px;
+  height: 280px;
   border-radius: 50%;
   overflow: hidden;
   box-shadow:
@@ -982,9 +1298,9 @@ header {
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 0.8rem;
+  gap: 1rem;
   background: rgba(255, 255, 255, 0.95);
-  padding: 0.6rem 1rem;
+  padding: 0.8rem 1.2rem;
   border-radius: 50px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(10px);
@@ -993,14 +1309,14 @@ header {
 
 .tech-icons .icon {
   background: var(--card-bg);
-  width: clamp(40px, 10vw, 50px);
-  height: clamp(40px, 10vw, 50px);
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 5px 15px rgba(26, 54, 93, 0.1);
-  font-size: clamp(1.1rem, 3vw, 1.4rem);
+  font-size: 1.4rem;
   color: var(--secondary-water);
   transition: var(--transition);
   border: 1px solid rgba(139, 115, 85, 0.3);
@@ -1028,14 +1344,14 @@ header {
 
 /* Core Expertise Section */
 .skills-section {
-  padding: 4rem 0;
+  padding: 5rem 0;
   position: relative;
   background-color: var(--neutral-light);
 }
 
 .section-header {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
   opacity: 0;
   transform: translateY(30px);
   transition: all 0.8s ease;
@@ -1048,7 +1364,7 @@ header {
 
 .section-title {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-size: 2.5rem;
   color: var(--primary-earth);
   margin-bottom: 1rem;
   position: relative;
@@ -1068,7 +1384,7 @@ header {
 
 .section-subtitle {
   color: var(--neutral-dark);
-  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  font-size: 1.1rem;
   max-width: 600px;
   margin: 1.5rem auto 0;
   font-family: 'Poppins', sans-serif;
@@ -1076,14 +1392,14 @@ header {
 
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
 }
 
 .skill-card {
   background: var(--card-bg);
   border-radius: 8px;
-  padding: 1.5rem;
+  padding: 2rem;
   transition: var(--transition);
   border-left: 4px solid var(--secondary-water);
   box-shadow: 0 10px 30px rgba(26, 54, 93, 0.1);
@@ -1104,7 +1420,7 @@ header {
 }
 
 .skill-icon {
-  font-size: clamp(2rem, 5vw, 2.5rem);
+  font-size: 2.5rem;
   color: var(--secondary-water);
   margin-bottom: 1.5rem;
   transition: var(--transition);
@@ -1115,7 +1431,7 @@ header {
 }
 
 .skill-card h3 {
-  font-size: clamp(1.2rem, 3vw, 1.4rem);
+  font-size: 1.4rem;
   margin-bottom: 1rem;
   color: var(--primary-earth);
   font-family: 'Playfair Display', serif;
@@ -1125,7 +1441,7 @@ header {
   color: var(--neutral-dark);
   margin-bottom: 1.5rem;
   line-height: 1.6;
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-family: 'Poppins', sans-serif;
 }
 
@@ -1154,14 +1470,14 @@ header {
 
 /* Featured Projects Section */
 .projects-section {
-  padding: 4rem 0;
+  padding: 5rem 0;
   background: rgba(248, 249, 250, 0.5);
 }
 
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
   margin-top: 3rem;
 }
 
@@ -1190,7 +1506,7 @@ header {
 }
 
 .project-image {
-  height: 180px;
+  height: 200px;
   overflow: hidden;
   position: relative;
 }
@@ -1211,7 +1527,7 @@ header {
 }
 
 .project-title {
-  font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+  font-size: 1.3rem;
   margin-bottom: 0.5rem;
   color: var(--primary-earth);
   font-family: 'Playfair Display', serif;
@@ -1220,7 +1536,7 @@ header {
 .project-description {
   color: var(--neutral-dark);
   margin-bottom: 1rem;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   line-height: 1.5;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -1265,7 +1581,7 @@ header {
 
 /* Education Support Section - UPDATED COLORS FOR BETTER VISIBILITY */
 .education-section {
-  padding: 4rem 0;
+  padding: 5rem 0;
   background: linear-gradient(135deg, var(--primary-earth) 0%, var(--neutral-dark) 100%);
   color: white;
   position: relative;
@@ -1293,16 +1609,16 @@ header {
 .education-message {
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(15px);
-  padding: 2rem;
+  padding: 3rem;
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .education-icon {
-  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-size: 4rem;
   color: var(--education-gold);
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   animation: gentlePulse 3s ease-in-out infinite;
   text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
 }
@@ -1311,13 +1627,13 @@ header {
 .education-section .section-title {
   color: var(--education-gold) !important;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7) !important;
-  font-size: clamp(1.8rem, 4vw, 2.8rem) !important;
+  font-size: 2.8rem !important;
   margin-bottom: 1rem !important;
 }
 
 .education-section .section-subtitle {
   color: var(--education-light) !important;
-  font-size: clamp(1rem, 2.5vw, 1.3rem) !important;
+  font-size: 1.3rem !important;
   font-weight: 500 !important;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) !important;
   max-width: 700px !important;
@@ -1325,7 +1641,7 @@ header {
 
 .education-title {
   color: var(--education-gold) !important;
-  font-size: clamp(1.5rem, 3.5vw, 2.2rem) !important;
+  font-size: 2.2rem !important;
   margin-bottom: 1.5rem !important;
   font-family: 'Playfair Display', serif !important;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5) !important;
@@ -1333,7 +1649,7 @@ header {
 }
 
 .education-message p {
-  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  font-size: 1.1rem;
   line-height: 1.7;
   margin-bottom: 1.5rem;
   font-family: 'Poppins', sans-serif;
@@ -1343,7 +1659,7 @@ header {
 
 .education-quote {
   background: rgba(255, 215, 0, 0.1);
-  padding: 1.5rem;
+  padding: 2rem;
   border-radius: 12px;
   margin-top: 2rem;
   border-left: 4px solid var(--education-gold);
@@ -1351,7 +1667,7 @@ header {
 }
 
 .education-quote i {
-  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-size: 2rem;
   color: var(--education-gold);
   margin-bottom: 1rem;
   display: block;
@@ -1360,7 +1676,7 @@ header {
 
 .education-quote p {
   font-style: italic;
-  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  font-size: 1.3rem;
   margin-bottom: 1rem;
   color: var(--education-light);
   font-weight: 500;
@@ -1370,13 +1686,13 @@ header {
 .education-quote span {
   color: var(--education-gold);
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 1rem;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 /* Call to Action Section */
 .cta-section {
-  padding: 4rem 0;
+  padding: 5rem 0;
   background: var(--neutral-light);
   text-align: center;
   color: var(--neutral-dark);
@@ -1390,7 +1706,7 @@ header {
 
 .cta-title {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-size: 2.5rem;
   margin-bottom: 1rem;
   color: var(--primary-earth);
 }
@@ -1398,15 +1714,15 @@ header {
 .cta-description {
   color: var(--neutral-dark);
   margin-bottom: 2rem;
-  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  font-size: 1.1rem;
   font-family: 'Poppins', sans-serif;
 }
 
 /* Scroll to top button */
 .scroll-to-top {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 30px;
+  right: 30px;
   width: 50px;
   height: 50px;
   background: var(--secondary-water);
@@ -1459,7 +1775,47 @@ header {
   }
 }
 
-/* Mobile Navigation */
+/* ========== MOBILE RESPONSIVE IMPROVEMENTS ========== */
+
+/* Profile Image Improvements for Mobile */
+@media (max-width: 768px) {
+  .image-wrapper {
+    width: 220px;
+    height: 220px;
+  }
+
+  .tech-icons {
+    padding: 0.6rem 1rem;
+    bottom: -20px;
+  }
+
+  .tech-icons .icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .image-wrapper {
+    width: 200px;
+    height: 200px;
+  }
+
+  .tech-icons {
+    gap: 0.8rem;
+    padding: 0.5rem 0.8rem;
+    bottom: -15px;
+  }
+
+  .tech-icons .icon {
+    width: 35px;
+    height: 35px;
+    font-size: 1.1rem;
+  }
+}
+
+/* Enhanced Mobile Navigation */
 @media (max-width: 768px) {
   .menu-toggle {
     display: block;
@@ -1476,10 +1832,11 @@ header {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding-top: 80px;
+    padding-top: 100px;
     transition: all 0.4s ease;
     gap: 0;
     z-index: 999;
+    overflow-y: auto;
   }
 
   .nav-links.active {
@@ -1534,7 +1891,7 @@ header {
     transform: translateX(-50%) translateY(-10px);
   }
 
-  .language-dropdown:hover .language-options {
+  .language-options.active {
     transform: translateX(-50%) translateY(0);
   }
 
@@ -1542,143 +1899,220 @@ header {
   body.menu-open {
     overflow: hidden;
   }
-
-  /* Mobile-specific background optimization */
-  .desktop-only {
-    display: none;
-  }
-
-  .mobile-background {
-    display: block;
-  }
 }
 
-/* Tablet and Desktop Layout Adjustments */
-@media (min-width: 769px) {
+/* Responsive Design for Hero Section */
+@media (max-width: 992px) {
   .hero-container {
-    grid-template-columns: 1fr 400px;
-    gap: 4rem;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    text-align: center;
   }
 
   .hero-content {
-    text-align: left;
-  }
-
-  .hero-buttons {
-    justify-content: flex-start;
-  }
-
-  .education-support {
-    justify-content: flex-start;
-  }
-
-  .hero-image {
-    order: 0;
+    text-align: center;
   }
 
   .flag-line {
-    left: 0;
-    transform: none;
-    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+  }
+
+  .image-wrapper {
+    width: 240px;
+    height: 240px;
   }
 }
 
-/* Large Desktop Layout */
-@media (min-width: 1200px) {
-  .hero-container {
-    gap: 5rem;
-  }
-}
-
-/* Extra small devices */
-@media (max-width: 480px) {
-  .logo {
-    font-size: 1rem;
-  }
-
-  .logo-icon {
-    font-size: 1.2rem;
-  }
-
-  .nav-links a {
-    padding: 1rem 1.5rem;
-    font-size: 1rem;
-  }
-
+@media (max-width: 768px) {
   .hero {
     padding: 5rem 0 3rem;
-    margin-top: 70px;
+    min-height: 60vh;
   }
 
-  .hero-content {
-    padding: 1.5rem;
+  .hero-container {
+    gap: 2rem;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
   }
 
   .education-support {
     flex-direction: column;
     text-align: center;
-    gap: 0.5rem;
+  }
+
+  .image-wrapper {
+    width: 220px;
+    height: 220px;
   }
 
   .tech-icons {
-    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .tech-icons .icon {
+    width: 45px;
+    height: 45px;
+    font-size: 1.2rem;
+  }
+
+  .education-message {
+    padding: 2rem;
+  }
+
+  .education-icon {
+    font-size: 3rem;
+  }
+
+  .education-title {
+    font-size: 1.8rem !important;
+  }
+
+  .education-section .section-title {
+    font-size: 2.2rem !important;
+  }
+
+  .education-section .section-subtitle {
+    font-size: 1.1rem !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn {
+    width: 100%;
+    max-width: 250px;
+  }
+
+  .image-wrapper {
+    width: 200px;
+    height: 200px;
+  }
+
+  .tech-icons {
+    gap: 0.8rem;
     padding: 0.5rem 0.8rem;
   }
 
   .tech-icons .icon {
-    width: 35px;
-    height: 35px;
-    font-size: 1rem;
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
   }
 
-  .skills-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .projects-grid {
-    grid-template-columns: 1fr;
+  .flag-line {
+    width: 90%;
   }
 
   .education-message {
     padding: 1.5rem;
   }
 
-  .education-quote {
-    padding: 1rem;
+  .education-icon {
+    font-size: 2.5rem;
   }
 
-  .scroll-to-top {
-    bottom: 15px;
-    right: 15px;
-    width: 45px;
-    height: 45px;
-    font-size: 1rem;
+  .education-title {
+    font-size: 1.5rem !important;
+  }
+
+  .education-section .section-title {
+    font-size: 2rem !important;
+  }
+
+  .education-section .section-subtitle {
+    font-size: 1rem !important;
+  }
+
+  .education-quote p {
+    font-size: 1.1rem;
   }
 }
 
-/* High-resolution displays */
-@media (min-width: 1400px) {
-  .container {
-    max-width: 1320px;
+/* Responsive styles for other sections */
+@media (max-width: 992px) {
+  .hero-title {
+    font-size: 2.8rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .section-title {
+    font-size: 2.2rem;
   }
 }
 
-/* Print styles */
-@media print {
-  .scroll-to-top,
-  .menu-toggle,
-  .hero-buttons {
-    display: none !important;
-  }
-
+@media (max-width: 768px) {
   .hero {
-    background: white !important;
-    color: black !important;
+    padding: 5rem 0 3rem;
+    min-height: 50vh;
   }
 
-  .hero-content {
-    background: transparent !important;
-    backdrop-filter: none !important;
+  .hero-title {
+    font-size: 2.3rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+  .logo {
+    font-size: 1.2rem;
+  }
+
+  .logo-icon {
+    font-size: 1.5rem;
+  }
+
+  .nav-links a {
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
   }
 }
 </style>
