@@ -72,11 +72,27 @@
               <stop offset="100%" stop-color="#4A90E2" stop-opacity="0" />
             </radialGradient>
 
+            <!-- Satellite Glow -->
+            <radialGradient id="satelliteGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#FFD700" stop-opacity="0.9" />
+              <stop offset="70%" stop-color="#FFA500" stop-opacity="0.5" />
+              <stop offset="100%" stop-color="#FFD700" stop-opacity="0" />
+            </radialGradient>
+
             <!-- Enhanced Glow Filter -->
             <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
               <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
               <feMerge>
                 <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+
+            <!-- Satellite Glow Filter -->
+            <filter id="satelliteGlowFilter" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="3" result="satelliteBlur"/>
+              <feMerge>
+                <feMergeNode in="satelliteBlur"/>
                 <feMergeNode in="SourceGraphic"/>
               </feMerge>
             </filter>
@@ -140,24 +156,67 @@
             <path class="connection connection-8" d="M580,430 L880,480" />
           </g>
 
-          <!-- Satellite System -->
+          <!-- Enhanced Satellite System -->
           <g class="satellite-system">
             <!-- Orbits -->
-            <circle class="orbit orbit-1" cx="600" cy="400" r="180" />
-            <circle class="orbit orbit-2" cx="600" cy="400" r="280" />
-            <circle class="orbit orbit-3" cx="600" cy="400" r="380" />
+            <circle class="orbit orbit-1" cx="600" cy="400" r="180" fill="none" stroke="#4A90E2" stroke-opacity="0.2" stroke-width="1.5" stroke-dasharray="4 8" />
+            <circle class="orbit orbit-2" cx="600" cy="400" r="280" fill="none" stroke="#4A90E2" stroke-opacity="0.15" stroke-width="1.2" stroke-dasharray="6 12" />
+            <circle class="orbit orbit-3" cx="600" cy="400" r="380" fill="none" stroke="#4A90E2" stroke-opacity="0.1" stroke-width="1" stroke-dasharray="8 16" />
 
             <!-- Satellites -->
             <g class="satellites">
-              <circle class="satellite satellite-1" cx="780" cy="400" r="6">
-                <animateTransform attributeName="transform" type="rotate" from="0 600 400" to="360 600 400" dur="25s" repeatCount="indefinite" />
-              </circle>
-              <circle class="satellite satellite-2" cx="600" cy="220" r="5">
+              <!-- Low Earth Orbit Satellite -->
+              <g class="satellite satellite-1" transform="rotate(0 600 400)">
+                <circle cx="780" cy="400" r="8" fill="url(#satelliteGlow)" filter="url(#satelliteGlowFilter)" />
+                <circle cx="780" cy="400" r="4" fill="#FFFFFF" />
+                <path d="M785,400 L795,400 M780,395 L780,385 M780,405 L780,415" stroke="#FFFFFF" stroke-width="1.5" />
+                <animateTransform attributeName="transform" type="rotate" from="0 600 400" to="360 600 400" dur="20s" repeatCount="indefinite" />
+              </g>
+
+              <!-- Medium Earth Orbit Satellite -->
+              <g class="satellite satellite-2" transform="rotate(120 600 400)">
+                <circle cx="600" cy="120" r="6" fill="url(#satelliteGlow)" filter="url(#satelliteGlowFilter)" />
+                <circle cx="600" cy="120" r="3" fill="#FFFFFF" />
+                <path d="M603,120 L609,120 M600,117 L600,111 M600,123 L600,129" stroke="#FFFFFF" stroke-width="1.2" />
                 <animateTransform attributeName="transform" type="rotate" from="120 600 400" to="480 600 400" dur="30s" repeatCount="indefinite" />
-              </circle>
-              <circle class="satellite satellite-3" cx="420" cy="400" r="4">
-                <animateTransform attributeName="transform" type="rotate" from="240 600 400" to="600 600 400" dur="35s" repeatCount="indefinite" />
-              </circle>
+              </g>
+
+              <!-- Geostationary Orbit Satellite -->
+              <g class="satellite satellite-3" transform="rotate(240 600 400)">
+                <circle cx="220" cy="400" r="7" fill="url(#satelliteGlow)" filter="url(#satelliteGlowFilter)" />
+                <circle cx="220" cy="400" r="3.5" fill="#FFFFFF" />
+                <path d="M223,400 L229,400 M220,397 L220,391 M220,403 L220,409" stroke="#FFFFFF" stroke-width="1.3" />
+                <animateTransform attributeName="transform" type="rotate" from="240 600 400" to="600 600 400" dur="40s" repeatCount="indefinite" />
+              </g>
+
+              <!-- Additional Small Satellites -->
+              <g class="satellite satellite-4" transform="rotate(45 600 400)">
+                <circle cx="740" cy="260" r="4" fill="#4A90E2" filter="url(#glow)" />
+                <animateTransform attributeName="transform" type="rotate" from="45 600 400" to="405 600 400" dur="25s" repeatCount="indefinite" />
+              </g>
+
+              <g class="satellite satellite-5" transform="rotate(180 600 400)">
+                <circle cx="600" cy="20" r="3" fill="#2E86AB" filter="url(#glow)" />
+                <animateTransform attributeName="transform" type="rotate" from="180 600 400" to="540 600 400" dur="35s" repeatCount="indefinite" />
+              </g>
+            </g>
+
+            <!-- Satellite Communication Beams -->
+            <g class="satellite-beams">
+              <!-- Beam from Satellite 1 to Data Cluster 2 -->
+              <path class="satellite-beam beam-1" d="M780,400 L600,400" stroke="url(#contourGradient)" stroke-width="2" stroke-dasharray="4 8" opacity="0.3">
+                <animate attributeName="stroke-dashoffset" from="0" to="20" dur="2s" repeatCount="indefinite" />
+              </path>
+
+              <!-- Beam from Satellite 2 to Data Cluster 1 -->
+              <path class="satellite-beam beam-2" d="M600,120 L300,350" stroke="url(#contourGradient)" stroke-width="1.5" stroke-dasharray="3 6" opacity="0.2">
+                <animate attributeName="stroke-dashoffset" from="0" to="15" dur="1.5s" repeatCount="indefinite" />
+              </path>
+
+              <!-- Beam from Satellite 3 to Data Cluster 3 -->
+              <path class="satellite-beam beam-3" d="M220,400 L900,450" stroke="url(#contourGradient)" stroke-width="1.5" stroke-dasharray="3 6" opacity="0.2">
+                <animate attributeName="stroke-dashoffset" from="0" to="15" dur="1.8s" repeatCount="indefinite" />
+              </path>
             </g>
           </g>
 
@@ -173,7 +232,9 @@
 
           <!-- Scan Lines Effect -->
           <g class="scan-lines">
-            <rect class="scan-line" x="0" y="0" width="100%" height="2" fill="#4A90E2" opacity="0.1" />
+            <rect class="scan-line" x="0" y="0" width="100%" height="2" fill="#4A90E2" opacity="0.1">
+              <animate attributeName="y" from="0" to="800" dur="15s" repeatCount="indefinite" />
+            </rect>
           </g>
         </svg>
       </div>
@@ -215,7 +276,7 @@
       </div>
     </section>
 
-    <!-- Rest of your sections remain the same -->
+    <!-- Rest of your sections remain exactly the same -->
     <!-- Core Expertise -->
     <section class="skills-section" id="expertise">
       <div class="container">
@@ -516,6 +577,93 @@ useSeoMeta({
 </script>
 
 <style scoped>
+/* All the previous CSS styles remain exactly the same, except we'll add satellite-specific animations */
+
+/* Enhanced Satellite System Animations */
+.satellite-system {
+  opacity: 0.8;
+}
+
+.orbit {
+  animation: orbitPulse 8s ease-in-out infinite;
+}
+
+.orbit-1 { animation-delay: 0s; }
+.orbit-2 { animation-delay: 2s; }
+.orbit-3 { animation-delay: 4s; }
+
+@keyframes orbitPulse {
+  0%, 100% {
+    stroke-opacity: 0.1;
+  }
+  50% {
+    stroke-opacity: 0.3;
+  }
+}
+
+.satellite {
+  filter: url(#satelliteGlowFilter);
+}
+
+.satellite-1 {
+  animation: satellitePulse 3s ease-in-out infinite;
+}
+
+.satellite-2 {
+  animation: satellitePulse 4s ease-in-out infinite 1s;
+}
+
+.satellite-3 {
+  animation: satellitePulse 5s ease-in-out infinite 2s;
+}
+
+.satellite-4, .satellite-5 {
+  animation: smallSatellitePulse 2s ease-in-out infinite;
+}
+
+@keyframes satellitePulse {
+  0%, 100% {
+    filter: url(#satelliteGlowFilter);
+    opacity: 0.8;
+  }
+  50% {
+    filter: url(#satelliteGlowFilter) brightness(1.5);
+    opacity: 1;
+  }
+}
+
+@keyframes smallSatellitePulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.satellite-beam {
+  animation: beamScan 3s linear infinite;
+}
+
+.beam-1 { animation-delay: 0s; }
+.beam-2 { animation-delay: 1s; }
+.beam-3 { animation-delay: 2s; }
+
+@keyframes beamScan {
+  0% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 0.1;
+  }
+}
+
+/* The rest of your existing CSS remains exactly the same below this point */
+/* [All your previous CSS styles continue here...] */
+
 /* Import Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
 
