@@ -10,38 +10,37 @@
             <span>Ghulam Abbas Zafari</span>
           </NuxtLink>
           <ul class="nav-links" :class="{ active: isMenuOpen }" id="navLinks">
-  <li><NuxtLink to="/" data-i18n="home">Home</NuxtLink></li>
-  <li><NuxtLink to="/about" data-i18n="about">About</NuxtLink></li>
-  <li><NuxtLink to="/projects" data-i18n="projects">Projects</NuxtLink></li>
-  <li><NuxtLink to="/education" data-i18n="education">Education</NuxtLink></li>
-  <li><NuxtLink to="/experience" data-i18n="experience">Experience</NuxtLink></li>
-  <!-- ADD THIS LINE HERE -->
-  <li><NuxtLink to="/blog" data-i18n="blog">Blog</NuxtLink></li>
-  <li class="language-selector">
-    <div class="language-dropdown">
-      <button class="language-btn">
-        <i class="fas fa-globe"></i>
-        <span class="current-language">{{ currentLanguage.toUpperCase() }}</span>
-        <i class="fas fa-chevron-down" style="font-size: 0.8rem; margin-left: 5px;"></i>
-      </button>
-      <ul class="language-options">
-        <li :class="{ active: currentLanguage === 'en' }" @click="changeLanguage('en')">
-          <span class="language-flag">🇺🇸</span>
-          English
-        </li>
-        <li :class="{ active: currentLanguage === 'it' }" @click="changeLanguage('it')">
-          <span class="language-flag">🇮🇹</span>
-          Italiano
-        </li>
-        <li :class="{ active: currentLanguage === 'fa' }" @click="changeLanguage('fa')">
-          <span class="language-flag">🇮🇷</span>
-          فارسی
-        </li>
-      </ul>
-    </div>
-  </li>
-  <li><NuxtLink to="/contact" class="contact-btn active" data-i18n="contact">Contact</NuxtLink></li>
-</ul>
+            <li><NuxtLink to="/" data-i18n="home">Home</NuxtLink></li>
+            <li><NuxtLink to="/about" data-i18n="about">About</NuxtLink></li>
+            <li><NuxtLink to="/projects" data-i18n="projects">Projects</NuxtLink></li>
+            <li><NuxtLink to="/education" data-i18n="education">Education</NuxtLink></li>
+            <li><NuxtLink to="/experience" data-i18n="experience">Experience</NuxtLink></li>
+            <li><NuxtLink to="/blog" data-i18n="blog">Blog</NuxtLink></li>
+            <li class="language-selector">
+              <div class="language-dropdown">
+                <button class="language-btn">
+                  <i class="fas fa-globe"></i>
+                  <span class="current-language">{{ currentLanguage.toUpperCase() }}</span>
+                  <i class="fas fa-chevron-down" style="font-size: 0.8rem; margin-left: 5px;"></i>
+                </button>
+                <ul class="language-options">
+                  <li :class="{ active: currentLanguage === 'en' }" @click="changeLanguage('en')">
+                    <span class="language-flag">🇺🇸</span>
+                    English
+                  </li>
+                  <li :class="{ active: currentLanguage === 'it' }" @click="changeLanguage('it')">
+                    <span class="language-flag">🇮🇹</span>
+                    Italiano
+                  </li>
+                  <li :class="{ active: currentLanguage === 'fa' }" @click="changeLanguage('fa')">
+                    <span class="language-flag">🇮🇷</span>
+                    فارسی
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li><NuxtLink to="/contact" class="contact-btn active" data-i18n="contact">Contact</NuxtLink></li>
+          </ul>
           <div class="menu-toggle" @click="toggleMenu">
             <i :class="isMenuOpen ? 'fas fa-times' : 'fas fa-bars'"></i>
           </div>
@@ -135,7 +134,7 @@
                   <i class="fas fa-check-circle"></i> Thank you for your message! I will get back to you soon.
                 </div>
                 <div v-if="showError" class="error-message" data-i18n="error_message">
-                  <i class="fas fa-exclamation-circle"></i> There was an error sending your message. Please try again or contact me directly at ghulamabbas.zafari@gmail.com
+                  <i class="fas fa-exclamation-circle"></i> {{ errorMessage }}
                 </div>
               </form>
             </div>
@@ -182,12 +181,20 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 
+// EmailJS Configuration
+const emailjsConfig = {
+  serviceId: 'service_zgixsys',
+  publicKey: 'S63G60vvZc5S9IWOL',
+  templateId: 'template_xlfr4bn'
+}
+
 // Reactive state
 const isMenuOpen = ref(false)
 const currentLanguage = ref('en')
 const isLoading = ref(false)
 const showSuccess = ref(false)
 const showError = ref(false)
+const errorMessage = ref('')
 
 // Form data
 const formData = ref({
@@ -219,36 +226,67 @@ const submitForm = async () => {
   isLoading.value = true
   showSuccess.value = false
   showError.value = false
+  errorMessage.value = ''
 
   try {
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 2000))
-
-    // Here you would typically send the form data to your backend or EmailJS
-    console.log('Form submitted:', formData.value)
-
-    // Show success message
-    showSuccess.value = true
-
-    // Reset form
-    formData.value = {
-      name: '',
-      email: '',
-      subject: '',
-      message: ''
+    // Validate form
+    if (!formData.value.name || !formData.value.email || !formData.value.subject || !formData.value.message) {
+      throw new Error('Please fill in all required fields')
     }
 
-    // Hide success message after 5 seconds
-    setTimeout(() => {
-      showSuccess.value = false
-    }, 5000)
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(formData.value.email)) {
+      throw new Error('Please enter a valid email address')
+    }
+
+    // Send email using EmailJS
+    const emailjs = await import('@emailjs/browser')
+
+    const templateParams = {
+      from_name: formData.value.name,
+      from_email: formData.value.email,
+      subject: formData.value.subject,
+      message: formData.value.message,
+      reply_to: formData.value.email
+    }
+
+    const result = await emailjs.send(
+      emailjsConfig.serviceId,
+      emailjsConfig.templateId,
+      templateParams,
+      emailjsConfig.publicKey
+    )
+
+    if (result.status === 200) {
+      // Show success message
+      showSuccess.value = true
+
+      // Reset form
+      formData.value = {
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      }
+
+      // Hide success message after 5 seconds
+      setTimeout(() => {
+        showSuccess.value = false
+      }, 5000)
+    } else {
+      throw new Error('Failed to send message. Please try again.')
+    }
+
   } catch (error) {
     console.error('Form submission error:', error)
+    errorMessage.value = error.message || 'There was an error sending your message. Please try again or contact me directly at ghulamabbas.zafari@gmail.com'
     showError.value = true
 
     // Hide error message after 5 seconds
     setTimeout(() => {
       showError.value = false
+      errorMessage.value = ''
     }, 5000)
   } finally {
     isLoading.value = false
