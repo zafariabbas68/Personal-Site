@@ -585,7 +585,7 @@ h3 {
   color: var(--secondary-water);
 }
 
-/* Enhanced Navigation */
+/* Enhanced Navigation - FIXED AFGHAN FLAG FOR MOBILE */
 header {
   background: linear-gradient(90deg,
       var(--afghan-black) 0%,
@@ -1815,7 +1815,7 @@ header {
   }
 }
 
-/* Enhanced Mobile Navigation */
+/* Enhanced Mobile Navigation - FIXED AFGHAN FLAG */
 @media (max-width: 768px) {
   .menu-toggle {
     display: block;
@@ -1893,6 +1893,18 @@ header {
 
   .language-options.active {
     transform: translateX(-50%) translateY(0);
+  }
+
+  /* FIXED: Afghan Flag for Mobile - Ensure proper display */
+  header {
+    background: linear-gradient(90deg,
+        var(--afghan-black) 0%,
+        var(--afghan-black) 33.33%,
+        var(--afghan-red) 33.33%,
+        var(--afghan-red) 66.66%,
+        var(--afghan-green) 66.66%,
+        var(--afghan-green) 100%);
+    min-height: 4px; /* Ensure flag is visible even on small screens */
   }
 
   /* Prevent body scroll when menu is open */
@@ -2113,6 +2125,32 @@ header {
   .nav-links a {
     padding: 1rem 1.5rem;
     font-size: 1rem;
+  }
+
+  /* FIXED: Ensure Afghan flag is visible on very small screens */
+  header {
+    background: linear-gradient(90deg,
+        var(--afghan-black) 0%,
+        var(--afghan-black) 33.33%,
+        var(--afghan-red) 33.33%,
+        var(--afghan-red) 66.66%,
+        var(--afghan-green) 66.66%,
+        var(--afghan-green) 100%);
+    min-height: 3px;
+  }
+}
+
+/* Additional Mobile Fixes for Flag Visibility */
+@media (max-width: 320px) {
+  header {
+    background: linear-gradient(90deg,
+        var(--afghan-black) 0%,
+        var(--afghan-black) 33.33%,
+        var(--afghan-red) 33.33%,
+        var(--afghan-red) 66.66%,
+        var(--afghan-green) 66.66%,
+        var(--afghan-green) 100%);
+    min-height: 2px;
   }
 }
 </style>
