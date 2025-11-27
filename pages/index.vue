@@ -184,7 +184,7 @@
             Transforming Spatial Data<br>Into
             <span class="highlight">
               Actionable Insights
-              <span class="flag-line"></span>
+              <span class="animated-line"></span>
             </span>
           </h1>
           <p class="hero-subtitle">Geoinformatics Engineer | GIS Specialist | Remote Sensing Expert</p>
@@ -215,6 +215,7 @@
       </div>
     </section>
 
+    <!-- Rest of your sections remain the same -->
     <!-- Core Expertise -->
     <section class="skills-section" id="expertise">
       <div class="container">
@@ -585,7 +586,7 @@ h3 {
   color: var(--secondary-water);
 }
 
-/* Enhanced Navigation - FIXED AFGHAN FLAG FOR MOBILE */
+/* Enhanced Navigation */
 header {
   background: linear-gradient(90deg,
       var(--afghan-black) 0%,
@@ -843,212 +844,6 @@ header {
   opacity: 1;
 }
 
-/* Enhanced Contour Lines */
-.contour-line {
-  fill: none;
-  stroke: url(#contourGradient);
-  stroke-width: 2.5;
-  stroke-linecap: round;
-  filter: url(#glow);
-}
-
-.contour-1 { animation: contourFloat 12s ease-in-out infinite; }
-.contour-2 { animation: contourFloat 14s ease-in-out infinite 1s; }
-.contour-3 { animation: contourFloat 16s ease-in-out infinite 2s; }
-.contour-4 { animation: contourFloat 18s ease-in-out infinite 3s; }
-.contour-5 { animation: contourFloat 20s ease-in-out infinite 4s; }
-.contour-6 { animation: contourFloat 22s ease-in-out infinite 5s; }
-
-@keyframes contourFloat {
-  0%, 100% {
-    transform: translateY(0px);
-    opacity: 0.6;
-    stroke-width: 2.5;
-  }
-  25% {
-    transform: translateY(-3px);
-    opacity: 0.8;
-    stroke-width: 3;
-  }
-  50% {
-    transform: translateY(-6px);
-    opacity: 1;
-    stroke-width: 3.5;
-  }
-  75% {
-    transform: translateY(-3px);
-    opacity: 0.8;
-    stroke-width: 3;
-  }
-}
-
-/* Enhanced Data Points */
-.data-point {
-  fill: url(#dataGlow);
-  filter: url(#glow);
-  stroke: #ffffff;
-  stroke-width: 1;
-  stroke-opacity: 0.5;
-}
-
-.data-point.primary {
-  animation: dataPulse 4s ease-in-out infinite;
-  r: 6;
-}
-
-.data-point.secondary {
-  animation: dataPulse 3s ease-in-out infinite;
-  r: 4;
-}
-
-.data-cluster-1 .data-point { animation-delay: 0s; }
-.data-cluster-2 .data-point { animation-delay: 0.5s; }
-.data-cluster-3 .data-point { animation-delay: 1s; }
-
-@keyframes dataPulse {
-  0%, 100% {
-    r: var(--base-size, 4);
-    opacity: 0.7;
-    stroke-width: 1;
-  }
-  50% {
-    r: calc(var(--base-size, 4) + 2);
-    opacity: 1;
-    stroke-width: 2;
-  }
-}
-
-.data-point.primary {
-  --base-size: 6;
-}
-
-.data-point.secondary {
-  --base-size: 4;
-}
-
-/* Enhanced Connection Lines */
-.connection {
-  fill: none;
-  stroke: #4A90E2;
-  stroke-width: 1.5;
-  stroke-dasharray: 8 4;
-  stroke-opacity: 0.6;
-  filter: url(#glow);
-}
-
-.connection-1 { animation: connectionFlow 6s linear infinite; }
-.connection-2 { animation: connectionFlow 7s linear infinite 0.5s; }
-.connection-3 { animation: connectionFlow 8s linear infinite 1s; }
-.connection-4 { animation: connectionFlow 9s linear infinite 1.5s; }
-.connection-5 { animation: connectionFlow 10s linear infinite 2s; }
-.connection-6 { animation: connectionFlow 11s linear infinite 2.5s; }
-.connection-7 { animation: connectionFlow 12s linear infinite 3s; }
-.connection-8 { animation: connectionFlow 13s linear infinite 3.5s; }
-
-@keyframes connectionFlow {
-  0% {
-    stroke-dashoffset: 24;
-    opacity: 0.3;
-  }
-  50% {
-    opacity: 0.8;
-  }
-  100% {
-    stroke-dashoffset: 0;
-    opacity: 0.3;
-  }
-}
-
-/* Enhanced Grid System */
-.grid-lines {
-  animation: gridMove 40s linear infinite;
-}
-
-@keyframes gridMove {
-  0% {
-    transform: translate(0, 0);
-  }
-  100% {
-    transform: translate(30px, 30px);
-  }
-}
-
-/* Enhanced Satellite System */
-.orbit {
-  fill: none;
-  stroke: #4A90E2;
-  stroke-opacity: 0.25;
-  stroke-width: 1.5;
-  stroke-dasharray: 4 8;
-}
-
-.orbit-1 { animation: orbitPulse 8s ease-in-out infinite; }
-.orbit-2 { animation: orbitPulse 10s ease-in-out infinite 1s; }
-.orbit-3 { animation: orbitPulse 12s ease-in-out infinite 2s; }
-
-@keyframes orbitPulse {
-  0%, 100% {
-    stroke-opacity: 0.2;
-    stroke-dasharray: 4 8;
-  }
-  50% {
-    stroke-opacity: 0.4;
-    stroke-dasharray: 8 4;
-  }
-}
-
-.satellite {
-  fill: #FFD700;
-  stroke: #FFA500;
-  stroke-width: 1;
-  filter: url(#glow);
-}
-
-.satellite-1 {
-  animation: satelliteGlow 3s ease-in-out infinite;
-}
-
-.satellite-2 {
-  animation: satelliteGlow 4s ease-in-out infinite 1s;
-}
-
-.satellite-3 {
-  animation: satelliteGlow 5s ease-in-out infinite 2s;
-}
-
-@keyframes satelliteGlow {
-  0%, 100% {
-    r: 4;
-    opacity: 0.7;
-  }
-  50% {
-    r: 6;
-    opacity: 1;
-  }
-}
-
-/* Enhanced Scan Lines */
-.scan-line {
-  animation: scanMove 15s linear infinite;
-}
-
-@keyframes scanMove {
-  0% {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-  10% {
-    opacity: 0.3;
-  }
-  90% {
-    opacity: 0.3;
-  }
-  100% {
-    transform: translateY(800px);
-    opacity: 0;
-  }
-}
-
 /* Enhanced Hero Container for Better Readability */
 .hero-container {
   width: 90%;
@@ -1142,34 +937,34 @@ header {
   display: inline-block;
 }
 
-/* Enhanced Flag Line for Better Visibility */
-.flag-line {
+/* NEW: Mobile-friendly Animated Line - REPLACED FLAG LINE */
+.animated-line {
   position: absolute;
   bottom: -8px;
   left: 0;
   width: 100%;
-  height: 4px;
+  height: 3px;
   background: linear-gradient(90deg,
-    var(--afghan-black) 0%,
-    var(--afghan-black) 33.33%,
-    var(--afghan-red) 33.33%,
-    var(--afghan-red) 66.66%,
-    var(--afghan-green) 66.66%,
-    var(--afghan-green) 100%);
+    transparent 0%,
+    var(--accent-sky) 20%,
+    var(--education-gold) 50%,
+    var(--accent-sky) 80%,
+    transparent 100%);
   border-radius: 2px;
-  animation: flagMove 3s ease-in-out infinite alternate;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.3));
+  animation: lineGlow 2s ease-in-out infinite alternate;
+  box-shadow: 0 0 10px rgba(74, 144, 226, 0.5);
 }
 
-@keyframes flagMove {
+@keyframes lineGlow {
   0% {
+    opacity: 0.6;
     transform: scaleX(0.9);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
   }
   100% {
-    transform: scaleX(1.1);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    opacity: 1;
+    transform: scaleX(1);
+    box-shadow: 0 0 15px rgba(74, 144, 226, 0.7);
   }
 }
 
@@ -1379,7 +1174,7 @@ header {
   transform: translateX(-50%);
   width: 80px;
   height: 3px;
-  background: linear-gradient(90deg, var(--afghan-black), var(--afghan-red), var(--afghan-green));
+  background: linear-gradient(90deg, var(--secondary-water), var(--accent-sky));
 }
 
 .section-subtitle {
@@ -1815,7 +1610,7 @@ header {
   }
 }
 
-/* Enhanced Mobile Navigation - FIXED AFGHAN FLAG */
+/* Enhanced Mobile Navigation */
 @media (max-width: 768px) {
   .menu-toggle {
     display: block;
@@ -1895,16 +1690,24 @@ header {
     transform: translateX(-50%) translateY(0);
   }
 
-  /* FIXED: Afghan Flag for Mobile - Ensure proper display */
-  header {
-    background: linear-gradient(90deg,
-        var(--afghan-black) 0%,
-        var(--afghan-black) 33.33%,
-        var(--afghan-red) 33.33%,
-        var(--afghan-red) 66.66%,
-        var(--afghan-green) 66.66%,
-        var(--afghan-green) 100%);
-    min-height: 4px; /* Ensure flag is visible even on small screens */
+  /* NEW: Mobile-specific animated line adjustments */
+  .animated-line {
+    height: 2px;
+    bottom: -6px;
+    animation: lineGlowMobile 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes lineGlowMobile {
+    0% {
+      opacity: 0.5;
+      transform: scaleX(0.8);
+      box-shadow: 0 0 3px rgba(74, 144, 226, 0.3);
+    }
+    100% {
+      opacity: 0.9;
+      transform: scaleX(0.95);
+      box-shadow: 0 0 8px rgba(74, 144, 226, 0.5);
+    }
   }
 
   /* Prevent body scroll when menu is open */
@@ -1923,12 +1726,6 @@ header {
 
   .hero-content {
     text-align: center;
-  }
-
-  .flag-line {
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80%;
   }
 
   .hero-buttons {
@@ -2035,10 +1832,6 @@ header {
     font-size: 1.1rem;
   }
 
-  .flag-line {
-    width: 90%;
-  }
-
   .education-message {
     padding: 1.5rem;
   }
@@ -2125,32 +1918,6 @@ header {
   .nav-links a {
     padding: 1rem 1.5rem;
     font-size: 1rem;
-  }
-
-  /* FIXED: Ensure Afghan flag is visible on very small screens */
-  header {
-    background: linear-gradient(90deg,
-        var(--afghan-black) 0%,
-        var(--afghan-black) 33.33%,
-        var(--afghan-red) 33.33%,
-        var(--afghan-red) 66.66%,
-        var(--afghan-green) 66.66%,
-        var(--afghan-green) 100%);
-    min-height: 3px;
-  }
-}
-
-/* Additional Mobile Fixes for Flag Visibility */
-@media (max-width: 320px) {
-  header {
-    background: linear-gradient(90deg,
-        var(--afghan-black) 0%,
-        var(--afghan-black) 33.33%,
-        var(--afghan-red) 33.33%,
-        var(--afghan-red) 66.66%,
-        var(--afghan-green) 66.66%,
-        var(--afghan-green) 100%);
-    min-height: 2px;
   }
 }
 </style>
